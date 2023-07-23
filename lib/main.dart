@@ -5,6 +5,7 @@ import 'package:great_places_app/screens/places_list_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() {
+  // WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
 }
 
@@ -19,10 +20,11 @@ class MyApp extends StatelessWidget {
         title: 'Great Places',
         theme: ThemeData(
           primarySwatch: Colors.indigo,
-          colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.amber),
+          colorScheme:
+              ColorScheme.fromSwatch().copyWith(secondary: Colors.amber),
         ),
         routes: {
-          AddPlaceScreen.routeName:(context) => AddPlaceScreen(),
+          AddPlaceScreen.routeName: (context) => AddPlaceScreen(),
         },
         home: PlacesListScreen(),
       ),
