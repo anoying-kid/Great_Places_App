@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.indigo,
           colorScheme:
-              ColorScheme.fromSwatch().copyWith(secondary: Colors.amber),
+              ColorScheme.fromSwatch().copyWith(primary: Colors.indigo,secondary: Colors.amber),
         ),
         routes: {
           AddPlaceScreen.routeName: (context) => AddPlaceScreen(),
