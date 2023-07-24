@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:great_places_app/helpers/location_helper.dart';
+import 'package:great_places_app/screens/map_screen.dart';
 
 class LocationInput extends StatefulWidget {
   const LocationInput({super.key});
@@ -30,6 +31,17 @@ class _LocationInputState extends State<LocationInput> {
     setState(() {
       _previewImageUrl = staticMapImage;
     });
+  }
+
+  Future<void> _selectOnMap() async {
+    final selectedLocation = await Navigator.of(context).push(MaterialPageRoute(
+      fullscreenDialog: true,
+        builder: (context) => MapScreen(
+              isSelecting: true,
+            )));
+    if (selectedLocation == null) {
+      return;
+    }
   }
 
   @override
@@ -64,16 +76,14 @@ class _LocationInputState extends State<LocationInput> {
                 },
                 label: Text('Current Location'),
                 style: TextButton.styleFrom(
-                  // backgroundColor: Theme.of(context).primaryColor,
                   iconColor: Theme.of(context).primaryColor,
                 ),
               ),
               TextButton.icon(
                 icon: Icon(Icons.map),
-                onPressed: () {},
+                onPressed: _selectOnMap,
                 label: Text('Select on Map'),
                 style: TextButton.styleFrom(
-                  // backgroundColor: Theme.of(context).primaryColor,
                   iconColor: Theme.of(context).primaryColor,
                 ),
               )
