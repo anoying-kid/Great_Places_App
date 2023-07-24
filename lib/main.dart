@@ -5,7 +5,6 @@ import 'package:great_places_app/screens/places_list_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  // WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
 }
 

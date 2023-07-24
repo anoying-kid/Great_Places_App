@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:great_places_app/helpers/location_helper.dart';
-import 'package:location/location.dart';
 
 class LocationInput extends StatefulWidget {
   const LocationInput({super.key});
@@ -13,9 +13,20 @@ class _LocationInputState extends State<LocationInput> {
   String? _previewImageUrl;
 
   Future<void> _getCurrentLocation() async {
-    final locData = await Location().getLocation();
+    var permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return Future.error('Location permissions are denied');
+      }
+    }
+    if (permission == LocationPermission.deniedForever) {
+      return Future.error(
+          'Location permissions are permanently denied, we cannot request permissions.');
+    }
+    final locData = await Geolocator.getCurrentPosition();
     final staticMapImage = LocationHelper.generatLocationPreviewImage(
-        locData.latitude!, locData.longitude!);
+        locData.latitude, locData.longitude);
     setState(() {
       _previewImageUrl = staticMapImage;
     });
@@ -48,7 +59,9 @@ class _LocationInputState extends State<LocationInput> {
             children: [
               TextButton.icon(
                 icon: Icon(Icons.location_on),
-                onPressed: _getCurrentLocation,
+                onPressed: () async {
+                  await _getCurrentLocation();
+                },
                 label: Text('Current Location'),
                 style: TextButton.styleFrom(
                   // backgroundColor: Theme.of(context).primaryColor,
